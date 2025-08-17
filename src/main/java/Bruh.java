@@ -120,7 +120,6 @@ public class Bruh {
                                 LINE);
                     } else {
                         Event event = new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
-                        listStrings.add(event);
                         addTask(event);
                     }
                 }
