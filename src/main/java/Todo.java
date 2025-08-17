@@ -1,8 +1,7 @@
-public class Todo {
-    protected String description;
+public class Todo extends Task {
 
     public Todo(String description) {
-        this.description = description;
+        super(description);
     }
 
     @Override
