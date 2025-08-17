@@ -1,10 +1,11 @@
 public class Bruh {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        String greeting = "____________________________________________________________\r\n" +
+                " Hello! I'm Bruh\r\n" +
+                " What can I do for you?\r\n" +
+                "____________________________________________________________\r\n" +
+                " Bye. Hope to see you again soon!\r\n" +
+                "____________________________________________________________\r\n";
+        System.out.println(greeting);
     }
 }
