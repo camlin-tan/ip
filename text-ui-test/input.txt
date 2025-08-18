@@ -1,3 +1,12 @@
+list
+blah
+mark
+mark 1
+unmark
+unmark 1
+todo
+deadline a/byb
+event a /from b
 todo buy potatoes
 deadline cook potatoes /by 6pm
 event potato dinner /from 6pm /to 8pm
@@ -5,5 +14,6 @@ mark 1
 mark 2
 list
 unmark 1
+mark 3
 list
 bye
