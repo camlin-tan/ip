@@ -5,6 +5,10 @@ public class Bruh {
     private static final String LINE = "  ____________________________________________________________\r\n   ";
     private static ArrayList<Task> listStrings = new ArrayList<>();
 
+    public enum Command {
+        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, ECHO, BYE
+    }
+
     public static void echo() {
         Scanner scnr = new Scanner(System.in);
         String userInput = scnr.nextLine();
@@ -14,6 +18,14 @@ public class Bruh {
                     LINE;
             System.out.println(response);
             userInput = scnr.nextLine();
+        }
+    }
+
+    public static Command getCommand(String userInputCommand) {
+        try {
+            return Command.valueOf(userInputCommand.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return null; // Invalid command
         }
     }
 
@@ -102,91 +114,106 @@ public class Bruh {
         while (running) {
             String userInput = scnr.nextLine();
             String[] parts = userInput.split(" ", 2);
-            String commandString = parts.length > 1 ? parts[0] : userInput;
-            String commandArgument = parts.length > 1 ? parts[1] : "";
+            Command commandString = getCommand(parts[0].trim());
+            String commandArgument = parts.length > 1 ? parts[1].trim() : "";
             try {
-                if (commandString.equals("mark")) {
-                    if (commandArgument.trim().isEmpty()) {
-                        throw new BruhException(
-                                "u want mark what? air ah?\r\n   Pls use in form \'mark {task-number}\' and try again");
-                    }
-                    try {
-                        Integer index = !commandArgument.trim().isEmpty() ? Integer.parseInt(commandArgument.trim()) - 1
-                                : -1;
-                        markTaskAsDone(index);
-                    } catch (NumberFormatException e) {
-                        throw new BruhException(
-                                "Idk what u tryna mark...\r\n   Pls use in form \'mark {task-number}\' and try again");
-                    }
-                } else if (commandString.equals("unmark")) {
-                    if (commandArgument.trim().isEmpty()) {
-                        throw new BruhException(
-                                "ERROR!!! task number cannot be empty...\r\n   "
-                                        + "Pls use in form \'unmark {task-number}\' and try again");
-                    }
-                    try {
-                        Integer index = commandArgument.trim() != "" ? Integer.parseInt(commandArgument.trim()) - 1
-                                : -1;
-                        markTaskAsNotDone(index);
-                    } catch (NumberFormatException e) {
-                        throw new BruhException(
-                                "Idk what u tryna unmark... pls use in form \\'mark {task-number}\\' and try again");
-                    }
-                } else if (commandString.equals("delete")) {
-                    if (commandArgument.trim().isEmpty()) {
-                        throw new BruhException(
-                                "ERROR!!! task number cannot be empty...\r\n   "
-                                        + "Pls use in form \'delete {task-number}\' and try again");
-                    }
-                    try {
-                        Integer index = commandArgument.trim() != "" ? Integer.parseInt(commandArgument.trim()) - 1
-                                : -1;
-                        deleteTask(index);
-                    } catch (NumberFormatException e) {
-                        throw new BruhException(
-                                "Idk what u tryna delete... pls use in form \\'delete {task-number}\\' and try again");
-                    }
-                } else if (commandString.equals("todo")) {
-                    if (commandArgument.trim().isEmpty()) {
-                        throw new BruhException("ERROR!!! The description of a todo cannot be empty.\r\n   " +
-                                "Please use in form \'todo {task-name}\' and try again");
-                    } else {
-                        Todo todo = new Todo(commandArgument.trim());
-                        addTask(todo);
-                    }
-                } else if (commandString.equals("deadline")) {
-                    String[] partsDeadline = commandArgument.split(" /by ", 2);
-                    if (commandArgument.trim().isEmpty() || partsDeadline.length < 2) {
-                        throw new BruhException("ERROR!!! Invalid input for deadline\r\n   " +
-                                "Please use in form \'deadline {task-name} /by {time}\' and try again");
-                    } else {
-                        Deadline todo = new Deadline(partsDeadline[0].trim(), partsDeadline[1].trim());
-                        addTask(todo);
-                    }
-                } else if (commandString.equals("event")) {
-                    String[] eventParts = commandArgument.split(" /from ", 2);
-                    if (eventParts.length < 2) {
-                        throw new BruhException("ERROR!!! Invalid input for event.\r\n   " +
-                                "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
-                    } else {
-                        String[] timeParts = eventParts[1].split(" /to ", 2);
-                        if (timeParts.length < 2) {
-                            throw new BruhException(
-                                    "ERROR!!! The start and end time not specified properly.\r\n   " +
-                                            "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
-                        } else {
-                            Event event = new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
-                            addTask(event);
-                        }
-                    }
-                } else if (userInput.equalsIgnoreCase("bye")) {
-                    running = false;
-                    break;
-                } else if (userInput.equalsIgnoreCase("list")) {
-                    listTasks();
-                } else {
+                if (commandString == null) {
                     throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   " +
                             "todo, deadline, event, mark, unmark, list, bye");
+                }
+                switch (commandString) {
+                    case BYE:
+                        running = false;
+                        break;
+                    case LIST:
+                        listTasks();
+                        break;
+                    case MARK:
+                        if (commandArgument.trim().isEmpty()) {
+                            throw new BruhException(
+                                    "u want mark what? air ah?\r\n   Pls use in form \'mark {task-number}\' and try again");
+                        }
+                        try {
+                            Integer index = !commandArgument.isEmpty()
+                                    ? Integer.parseInt(commandArgument.trim()) - 1
+                                    : -1;
+                            markTaskAsDone(index);
+                        } catch (NumberFormatException e) {
+                            throw new BruhException(
+                                    "Idk what u tryna mark...\r\n   Pls use in form \'mark {task-number}\' and try again");
+                        }
+                        break;
+                    case UNMARK:
+                        if (commandArgument.trim().isEmpty()) {
+                            throw new BruhException(
+                                    "ERROR!!! task number cannot be empty...\r\n   "
+                                            + "Pls use in form \'unmark {task-number}\' and try again");
+                        }
+                        try {
+                            Integer index = !commandArgument.isEmpty()
+                                    ? Integer.parseInt(commandArgument.trim()) - 1
+                                    : -1;
+                            markTaskAsNotDone(index);
+                        } catch (NumberFormatException e) {
+                            throw new BruhException(
+                                    "Idk what u tryna unmark... pls use in form \\'mark {task-number}\\' and try again");
+                        }
+                        break;
+                    case DELETE:
+                        if (commandArgument.isEmpty()) {
+                            throw new BruhException(
+                                    "ERROR!!! task number cannot be empty...\r\n   "
+                                            + "Pls use in form \'delete {task-number}\' and try again");
+                        }
+                        try {
+                            Integer index = !commandArgument.isEmpty()
+                                    ? Integer.parseInt(commandArgument.trim()) - 1
+                                    : -1;
+                            deleteTask(index);
+                        } catch (NumberFormatException e) {
+                            throw new BruhException(
+                                    "Idk what u tryna delete... pls use in form \\'delete {task-number}\\' and try again");
+                        }
+                        break;
+                    case TODO:
+                        if (commandArgument.isEmpty()) {
+                            throw new BruhException("ERROR!!! The description of a todo cannot be empty.\r\n   " +
+                                    "Please use in form \'todo {task-name}\' and try again");
+                        } else {
+                            Todo todo = new Todo(commandArgument);
+                            addTask(todo);
+                        }
+                        break;
+                    case DEADLINE:
+                        String[] partsDeadline = commandArgument.split(" /by ", 2);
+                        if (commandArgument.isEmpty() || partsDeadline.length < 2) {
+                            throw new BruhException("ERROR!!! Invalid input for deadline\r\n   " +
+                                    "Please use in form \'deadline {task-name} /by {time}\' and try again");
+                        } else {
+                            Deadline todo = new Deadline(partsDeadline[0].trim(), partsDeadline[1].trim());
+                            addTask(todo);
+                        }
+                        break;
+                    case EVENT:
+                        String[] eventParts = commandArgument.split(" /from ", 2);
+                        if (eventParts.length < 2) {
+                            throw new BruhException("ERROR!!! Invalid input for event.\r\n   " +
+                                    "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
+                        } else {
+                            String[] timeParts = eventParts[1].split(" /to ", 2);
+                            if (timeParts.length < 2) {
+                                throw new BruhException(
+                                        "ERROR!!! The start and end time not specified properly.\r\n   " +
+                                                "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
+                            } else {
+                                Event event = new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
+                                addTask(event);
+                            }
+                        }
+                        break;
+                    default:
+                        throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   " +
+                                "todo, deadline, event, mark, unmark, list, bye");
                 }
             } catch (BruhException e) {
                 System.out.println(LINE + e.getMessage() + "\r\n" + LINE);
