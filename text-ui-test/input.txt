@@ -1,8 +1,10 @@
 list
 blah
 mark
+mark abc
 mark 1
 unmark
+unmark abc
 unmark 1
 todo
 deadline a/byb
@@ -15,5 +17,10 @@ mark 2
 list
 unmark 1
 mark 3
+list
+delete
+delete 0
+delete abc
+delete 1
 list
 bye

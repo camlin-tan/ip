@@ -34,6 +34,19 @@ public class Bruh {
                 LINE);
     }
 
+    public static void deleteTask(int index) throws BruhException {
+        if (index >= 0 && index < listStrings.size()) {
+            Task task = listStrings.remove(index);
+            System.out.println(LINE +
+                    "Noted. I've removed this task:\r\n   " +
+                    task + "\r\n   " +
+                    "Now you have " + listStrings.size() + " tasks in the list.\r\n" +
+                    LINE);
+        } else {
+            throw new BruhException("ERROR!!! invalid task number... try again");
+        }
+    }
+
     public static void markTaskAsDone(int index) throws BruhException {
         if (index >= 0 && index < listStrings.size()) {
             Task task = listStrings.get(index);
@@ -118,6 +131,20 @@ public class Bruh {
                     } catch (NumberFormatException e) {
                         throw new BruhException(
                                 "Idk what u tryna unmark... pls use in form \\'mark {task-number}\\' and try again");
+                    }
+                } else if (commandString.equals("delete")) {
+                    if (commandArgument.trim().isEmpty()) {
+                        throw new BruhException(
+                                "ERROR!!! task number cannot be empty...\r\n   "
+                                        + "Pls use in form \'delete {task-number}\' and try again");
+                    }
+                    try {
+                        Integer index = commandArgument.trim() != "" ? Integer.parseInt(commandArgument.trim()) - 1
+                                : -1;
+                        deleteTask(index);
+                    } catch (NumberFormatException e) {
+                        throw new BruhException(
+                                "Idk what u tryna delete... pls use in form \\'delete {task-number}\\' and try again");
                     }
                 } else if (commandString.equals("todo")) {
                     if (commandArgument.trim().isEmpty()) {
