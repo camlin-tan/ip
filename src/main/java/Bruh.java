@@ -12,12 +12,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bruh {
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
     private static final String LINE = "  ____________________________________________________________\r\n   ";
     private static ArrayList<Task> listStrings = new ArrayList<>();
 
     public enum Command {
         TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, ECHO, BYE
     }
+
+    // public Bruh(String filePath) {
+    // ui = new Ui();
+    // storage = new Storage(filePath);
+    // try {
+    // tasks = new TaskList(storage.load());
+    // } catch (BruhException e) {
+    // ui.showLoadingError();
+    // tasks = new TaskList();
+    // }
+    // }
 
     public static void echo() {
         Scanner scnr = new Scanner(System.in);
@@ -139,6 +153,24 @@ public class Bruh {
             }
         }
         return tasksOnDate;
+    }
+
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine(); // show the divider line ("_______")
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
     }
 
     public static void main(String[] args) {
