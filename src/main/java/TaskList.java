@@ -5,50 +5,59 @@ import java.util.ArrayList;
 public class TaskList implements Serializable {
     private ArrayList<Task> tasks;
 
+    @SuppressWarnings("unchecked")
+    public TaskList(Serializable tasks) {
+        this.tasks = (ArrayList<Task>) tasks;
+    }
+
     public TaskList() {
-        tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
     public void addTask(Task task) {
         tasks.add(task);
+        // System.out.println(LINE + "Got it. I've added this task:\r\n " + task + "\r\n
+        // " + "Now you have "
+        // + tasks.size() + " tasks in the list.\r\n" + LINE);
     }
 
-    public void removeTask(Task task) {
-        tasks.remove(task);
+    public int size() {
+        return tasks.size();
     }
 
-    public void markTaskAsDone(int index) throws BruhException {
+    public Task deleteTask(int index) throws BruhException {
+        if (index >= 0 && index < tasks.size()) {
+            Task task = tasks.remove(index);
+            return task;
+            // System.out.println(LINE + "Noted. I've removed this task:\r\n " + task +
+            // "\r\n " + "Now you have "
+            // + tasks.size() + " tasks in the list.\r\n" + LINE);
+        } else {
+            throw new BruhException("ERROR!!! invalid task number... try again");
+        }
+    }
+
+    public Task markTaskAsDone(int index) throws BruhException {
         if (index >= 0 && index < tasks.size()) {
             Task task = tasks.get(index);
             task.markAsDone();
             // System.out.println(LINE + "Nice! I've marked this task as done:\r\n " + task
             // + "\r\n" + LINE);
+            return task;
         } else {
             throw new BruhException("ERROR!!! invalid task number... try again");
         }
     }
 
-    public void markTaskAsNotDone(int index) throws BruhException {
+    public Task markTaskAsNotDone(int index) throws BruhException {
         if (index >= 0 && index < tasks.size()) {
             Task task = tasks.get(index);
             task.markAsNotDone();
+            return task;
             // System.out.println(LINE + "Sike! Task actually not done yet:\r\n " + task +
             // "\r\n" + LINE);
         } else {
             throw new BruhException("ERROR!!! invalid task number... try again");
-        }
-    }
-
-    public static void listTasks(ArrayList<Task> tasks) {
-        if (tasks.isEmpty()) {
-            // System.out.println(LINE + "No tasks in the list yet or for date
-            // specified.\r\n" + LINE);
-        } else {
-            String itemsString = "";
-            for (int i = 0; i < tasks.size(); i++) {
-                itemsString += ((i + 1) + ". " + tasks.get(i) + "\r\n   ");
-            }
-            // System.out.println(LINE + itemsString.trim() + "\r\n" + LINE);
         }
     }
 
