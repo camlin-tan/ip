@@ -1,6 +1,10 @@
+package bruh.task;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import bruh.exception.BruhException;
 
 public class TaskList implements Serializable {
     private ArrayList<Task> tasks;

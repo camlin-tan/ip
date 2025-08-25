@@ -1,5 +1,9 @@
+package bruh.ui;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import bruh.task.Task;
 
 public class Ui {
     private static final String LINE = "  ____________________________________________________________\r\n   ";
