@@ -1,6 +1,9 @@
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -25,13 +28,32 @@ public class Bruh {
 
     public static void saveTasksToHardDisk() {
         try {
-            FileOutputStream fileOut = new FileOutputStream("./data/tasks.ser");
+            File taskFile = new File("./data/tasks.ser");
+            taskFile.getParentFile().mkdirs(); // Create directories if they don't exist
+            FileOutputStream fileOut = new FileOutputStream(taskFile);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(listStrings);
             out.close();
             fileOut.close();
         } catch (IOException e) {
             System.out.println("Error saving tasks to hard disk: " + e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void loadTasksFromHardDisk() {
+        File taskFile = new File("./data/tasks.ser");
+        if (!taskFile.exists()) {
+            return; // No tasks to load
+        }
+        try {
+            FileInputStream fileIn = new FileInputStream("./data/tasks.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            listStrings = (ArrayList<Task>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading tasks from hard disk: " + e.getMessage());
         }
     }
 
@@ -102,6 +124,7 @@ public class Bruh {
         String greeting = LINE + "Hello! I'm Bruh\r\n   " + "What can I do for you?\r\n" + LINE;
         String farewell = LINE + "Bye. Hope to see you again soon!\r\n" + LINE;
         Scanner scnr = new Scanner(System.in);
+        loadTasksFromHardDisk();
 
         System.out.println(greeting);
         while (running) {
@@ -203,6 +226,7 @@ public class Bruh {
                 System.out.println(LINE + e.getMessage() + "\r\n" + LINE);
             }
         }
+        saveTasksToHardDisk();
         System.out.println(farewell);
     }
 }
