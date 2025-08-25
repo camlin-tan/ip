@@ -4,7 +4,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -120,20 +122,18 @@ public class Bruh {
         }
     }
 
-    public static ArrayList<Task> getTasksOnDate(LocalDateTime date) {
+    public static ArrayList<Task> getTasksOnDate(LocalDate date) {
         ArrayList<Task> tasksOnDate = new ArrayList<>();
         for (Task task : listStrings) {
             if (task instanceof Event) {
                 Event event = (Event) task;
-                if (event.start.toLocalDate().isBefore(date.toLocalDate())
-                        && event.end.toLocalDate().isAfter(date.toLocalDate())
-                        || event.start.toLocalDate().equals(date.toLocalDate())
-                        || event.end.toLocalDate().equals(date.toLocalDate())) {
+                if (event.start.toLocalDate().isBefore(date) && event.end.toLocalDate().isAfter(date)
+                        || event.start.toLocalDate().equals(date) || event.end.toLocalDate().equals(date)) {
                     tasksOnDate.add(event);
                 }
             } else if (task instanceof Deadline) {
                 Deadline deadline = (Deadline) task;
-                if (deadline.by.toLocalDate().equals(date.toLocalDate())) {
+                if (deadline.by.toLocalDate().equals(date)) {
                     tasksOnDate.add(deadline);
                 }
             }
@@ -168,13 +168,14 @@ public class Bruh {
                         listTasks(listStrings);
                     } else {
                         try {
-                            LocalDateTime date = DateTimeParser.parse(commandArgument.trim());
+                            LocalDate date = LocalDate.parse(commandArgument.trim(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                             ArrayList<Task> tasksOnDate = getTasksOnDate(date);
                             listTasks(tasksOnDate);
                         } catch (DateTimeParseException e) {
                             throw new BruhException(
                                     "Invalid date format\r\n   Pls use in form \'list {date}\' or \'list\' and try again\r\n   "
-                                            + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
+                                            + "Please use format of time: yyyy-MM-dd (e.g. 2023-03-15)");
                         }
                     }
                     break;

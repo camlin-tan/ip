@@ -11,13 +11,14 @@ deadline a/byb
 event a /from b
 todo buy potatoes
 deadline cook potatoes /by 6pm
-event potato dinner /from 6pm /to 8pm
+deadline cook potatoes /by 2025-08-30 18:00
+event potato dinner /from 2025-08-30 19:00 /to 2025-08-30 21:00
 mark 1
 mark 2
 list
 unmark 1
 mark 3
-list
+list 2025-08-30
 delete
 delete 0
 delete abc
