@@ -1,10 +1,13 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -107,16 +110,35 @@ public class Bruh {
         }
     }
 
-    public static void listTasks() {
-        if (listStrings.isEmpty()) {
-            System.out.println(LINE + "No tasks in the list yet.\r\n" + LINE);
+    public static void listTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println(LINE + "No tasks in the list yet or for date specified.\r\n" + LINE);
         } else {
             String itemsString = "";
-            for (int i = 0; i < listStrings.size(); i++) {
-                itemsString += ((i + 1) + ". " + listStrings.get(i) + "\r\n   ");
+            for (int i = 0; i < tasks.size(); i++) {
+                itemsString += ((i + 1) + ". " + tasks.get(i) + "\r\n   ");
             }
             System.out.println(LINE + itemsString.trim() + "\r\n" + LINE);
         }
+    }
+
+    public static ArrayList<Task> getTasksOnDate(LocalDate date) {
+        ArrayList<Task> tasksOnDate = new ArrayList<>();
+        for (Task task : listStrings) {
+            if (task instanceof Event) {
+                Event event = (Event) task;
+                if (event.start.toLocalDate().isBefore(date) && event.end.toLocalDate().isAfter(date)
+                        || event.start.toLocalDate().equals(date) || event.end.toLocalDate().equals(date)) {
+                    tasksOnDate.add(event);
+                }
+            } else if (task instanceof Deadline) {
+                Deadline deadline = (Deadline) task;
+                if (deadline.by.toLocalDate().equals(date)) {
+                    tasksOnDate.add(deadline);
+                }
+            }
+        }
+        return tasksOnDate;
     }
 
     public static void main(String[] args) {
@@ -142,7 +164,20 @@ public class Bruh {
                     running = false;
                     break;
                 case LIST:
-                    listTasks();
+                    if (commandArgument.trim().isEmpty()) {
+                        listTasks(listStrings);
+                    } else {
+                        try {
+                            LocalDate date = LocalDate.parse(commandArgument.trim(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            ArrayList<Task> tasksOnDate = getTasksOnDate(date);
+                            listTasks(tasksOnDate);
+                        } catch (DateTimeParseException e) {
+                            throw new BruhException(
+                                    "Invalid date format\r\n   Pls use in form \'list {date}\' or \'list\' and try again\r\n   "
+                                            + "Please use format of time: yyyy-MM-dd (e.g. 2023-03-15)");
+                        }
+                    }
                     break;
                 case MARK:
                     if (commandArgument.trim().isEmpty()) {
@@ -195,26 +230,44 @@ public class Bruh {
                 case DEADLINE:
                     String[] partsDeadline = commandArgument.split(" /by ", 2);
                     if (commandArgument.isEmpty() || partsDeadline.length < 2) {
-                        throw new BruhException("ERROR!!! Invalid input for deadline\r\n   "
-                                + "Please use in form \'deadline {task-name} /by {time}\' and try again");
+                        throw new BruhException("ERROR!!! Invalid format for deadline\r\n   "
+                                + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+                                + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                     } else {
-                        Deadline todo = new Deadline(partsDeadline[0].trim(), partsDeadline[1].trim());
-                        addTask(todo);
+                        try {
+                            LocalDateTime by = DateTimeParser.parse(partsDeadline[1].trim());
+                            Deadline todo = new Deadline(partsDeadline[0].trim(), by);
+                            addTask(todo);
+                        } catch (DateTimeParseException e) {
+                            throw new BruhException("ERROR!!! Invalid date format for deadline\r\n   "
+                                    + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+                                    + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
+                        }
                     }
                     break;
                 case EVENT:
                     String[] eventParts = commandArgument.split(" /from ", 2);
                     if (eventParts.length < 2) {
                         throw new BruhException("ERROR!!! Invalid input for event.\r\n   "
-                                + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
+                                + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+                                + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                     } else {
                         String[] timeParts = eventParts[1].split(" /to ", 2);
                         if (timeParts.length < 2) {
                             throw new BruhException("ERROR!!! The start and end time not specified properly.\r\n   "
-                                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
+                                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+                                    + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                         } else {
-                            Event event = new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
-                            addTask(event);
+                            try {
+                                LocalDateTime from = DateTimeParser.parse(timeParts[0].trim());
+                                LocalDateTime to = DateTimeParser.parse(timeParts[1].trim());
+                                Event event = new Event(eventParts[0].trim(), from, to);
+                                addTask(event);
+                            } catch (DateTimeParseException e) {
+                                throw new BruhException("ERROR!!! Invalid date format for event\r\n   "
+                                        + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+                                        + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
+                            }
                         }
                     }
                     break;
