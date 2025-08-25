@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,6 +20,18 @@ public class Bruh {
             String response = LINE + userInput + "\r\n" + LINE;
             System.out.println(response);
             userInput = scnr.nextLine();
+        }
+    }
+
+    public static void saveTasksToHardDisk() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("./data/tasks.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(listStrings);
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to hard disk: " + e.getMessage());
         }
     }
 
