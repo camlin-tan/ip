@@ -108,16 +108,37 @@ public class Bruh {
         }
     }
 
-    public static void listTasks() {
-        if (listStrings.isEmpty()) {
-            System.out.println(LINE + "No tasks in the list yet.\r\n" + LINE);
+    public static void listTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println(LINE + "No tasks in the list yet or for date specified.\r\n" + LINE);
         } else {
             String itemsString = "";
-            for (int i = 0; i < listStrings.size(); i++) {
-                itemsString += ((i + 1) + ". " + listStrings.get(i) + "\r\n   ");
+            for (int i = 0; i < tasks.size(); i++) {
+                itemsString += ((i + 1) + ". " + tasks.get(i) + "\r\n   ");
             }
             System.out.println(LINE + itemsString.trim() + "\r\n" + LINE);
         }
+    }
+
+    public static ArrayList<Task> getTasksOnDate(LocalDateTime date) {
+        ArrayList<Task> tasksOnDate = new ArrayList<>();
+        for (Task task : listStrings) {
+            if (task instanceof Event) {
+                Event event = (Event) task;
+                if (event.start.toLocalDate().isBefore(date.toLocalDate())
+                        && event.end.toLocalDate().isAfter(date.toLocalDate())
+                        || event.start.toLocalDate().equals(date.toLocalDate())
+                        || event.end.toLocalDate().equals(date.toLocalDate())) {
+                    tasksOnDate.add(event);
+                }
+            } else if (task instanceof Deadline) {
+                Deadline deadline = (Deadline) task;
+                if (deadline.by.toLocalDate().equals(date.toLocalDate())) {
+                    tasksOnDate.add(deadline);
+                }
+            }
+        }
+        return tasksOnDate;
     }
 
     public static void main(String[] args) {
@@ -143,7 +164,19 @@ public class Bruh {
                     running = false;
                     break;
                 case LIST:
-                    listTasks();
+                    if (commandArgument.trim().isEmpty()) {
+                        listTasks(listStrings);
+                    } else {
+                        try {
+                            LocalDateTime date = DateTimeParser.parse(commandArgument.trim());
+                            ArrayList<Task> tasksOnDate = getTasksOnDate(date);
+                            listTasks(tasksOnDate);
+                        } catch (DateTimeParseException e) {
+                            throw new BruhException(
+                                    "Invalid date format\r\n   Pls use in form \'list {date}\' or \'list\' and try again\r\n   "
+                                            + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
+                        }
+                    }
                     break;
                 case MARK:
                     if (commandArgument.trim().isEmpty()) {
