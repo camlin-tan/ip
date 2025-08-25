@@ -1,10 +1,11 @@
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -195,26 +196,44 @@ public class Bruh {
                 case DEADLINE:
                     String[] partsDeadline = commandArgument.split(" /by ", 2);
                     if (commandArgument.isEmpty() || partsDeadline.length < 2) {
-                        throw new BruhException("ERROR!!! Invalid input for deadline\r\n   "
-                                + "Please use in form \'deadline {task-name} /by {time}\' and try again");
+                        throw new BruhException("ERROR!!! Invalid format for deadline\r\n   "
+                                + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+                                + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                     } else {
-                        Deadline todo = new Deadline(partsDeadline[0].trim(), partsDeadline[1].trim());
-                        addTask(todo);
+                        try {
+                            LocalDateTime by = DateTimeParser.parse(partsDeadline[1].trim());
+                            Deadline todo = new Deadline(partsDeadline[0].trim(), by);
+                            addTask(todo);
+                        } catch (DateTimeParseException e) {
+                            throw new BruhException("ERROR!!! Invalid date format for deadline\r\n   "
+                                    + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+                                    + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
+                        }
                     }
                     break;
                 case EVENT:
                     String[] eventParts = commandArgument.split(" /from ", 2);
                     if (eventParts.length < 2) {
                         throw new BruhException("ERROR!!! Invalid input for event.\r\n   "
-                                + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
+                                + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+                                + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                     } else {
                         String[] timeParts = eventParts[1].split(" /to ", 2);
                         if (timeParts.length < 2) {
                             throw new BruhException("ERROR!!! The start and end time not specified properly.\r\n   "
-                                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again");
+                                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+                                    + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                         } else {
-                            Event event = new Event(eventParts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
-                            addTask(event);
+                            try {
+                                LocalDateTime from = DateTimeParser.parse(timeParts[0].trim());
+                                LocalDateTime to = DateTimeParser.parse(timeParts[1].trim());
+                                Event event = new Event(eventParts[0].trim(), from, to);
+                                addTask(event);
+                            } catch (DateTimeParseException e) {
+                                throw new BruhException("ERROR!!! Invalid date format for event\r\n   "
+                                        + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+                                        + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
+                            }
                         }
                     }
                     break;
