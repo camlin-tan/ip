@@ -155,30 +155,37 @@ public class Bruh {
         return tasksOnDate;
     }
 
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                ui.showLine(); // show the divider line ("_______")
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (DukeException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
-    }
+    // public void run() {
+    // ui.showWelcome();
+    // boolean isExit = false;
+    // while (!isExit) {
+    // try {
+    // String fullCommand = ui.readCommand();
+    // ui.showLine(); // show the divider line ("_______")
+    // Command c = Parser.parse(fullCommand);
+    // c.execute(tasks, ui, storage);
+    // isExit = c.isExit();
+    // } catch (DukeException e) {
+    // ui.showError(e.getMessage());
+    // } finally {
+    // ui.showLine();
+    // }
+    // }
+    // }
 
     public static void main(String[] args) {
         boolean running = true;
         String greeting = LINE + "Hello! I'm Bruh\r\n   " + "What can I do for you?\r\n" + LINE;
         String farewell = LINE + "Bye. Hope to see you again soon!\r\n" + LINE;
         Scanner scnr = new Scanner(System.in);
-        loadTasksFromHardDisk();
+        // loadTasksFromHardDisk();
+
+        Storage storage = new Storage("./data/tasks.ser");
+        try {
+            listStrings = (ArrayList<Task>) storage.load();
+        } catch (BruhException e) {
+            System.out.println("Error loading tasks: " + e.getMessage());
+        }
 
         System.out.println(greeting);
         while (running) {
@@ -311,7 +318,11 @@ public class Bruh {
                 System.out.println(LINE + e.getMessage() + "\r\n" + LINE);
             }
         }
-        saveTasksToHardDisk();
+        try {
+            storage.save(listStrings);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         System.out.println(farewell);
     }
 }

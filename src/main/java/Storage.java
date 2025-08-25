@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Storage {
@@ -13,23 +14,22 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public void saveTasksToHardDisk(TaskList tasks) {
+    public void save(Serializable tasks) throws BruhException {
         try {
-            ArrayList<Task> listStrings = tasks.getTasks();
             File taskFile = new File(filePath);
             taskFile.getParentFile().mkdirs(); // Create directories if they don't exist
             FileOutputStream fileOut = new FileOutputStream(taskFile);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(listStrings);
+            out.writeObject(tasks);
             out.close();
             fileOut.close();
         } catch (IOException e) {
-            System.out.println("Error saving tasks to hard disk: " + e.getMessage());
+            throw new BruhException("Error saving tasks to hard disk: " + e.getMessage());
         }
     }
 
     @SuppressWarnings("unchecked")
-    public ArrayList<Task> loadTasksFromHardDisk() throws BruhException {
+    public Serializable load() throws BruhException {
         File taskFile = new File(filePath);
         if (!taskFile.exists()) {
             return new ArrayList<>(); // No tasks to load
@@ -37,7 +37,7 @@ public class Storage {
         try {
             FileInputStream fileIn = new FileInputStream(filePath);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            ArrayList<Task> listStrings = (ArrayList<Task>) in.readObject();
+            Serializable listStrings = (Serializable) in.readObject();
             in.close();
             fileIn.close();
             return listStrings;
