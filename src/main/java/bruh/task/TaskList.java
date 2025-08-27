@@ -84,6 +84,22 @@ public class TaskList implements Serializable {
         return tasksOnDate;
     }
 
+    /**
+     * Returns a list of tasks that match the given keyword.
+     * 
+     * @param keyword the keyword to search for
+     * @return a list of tasks that match the keyword
+     */
+    public ArrayList<Task> getTasksByKeyword(String keyword) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().contains(keyword)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }
