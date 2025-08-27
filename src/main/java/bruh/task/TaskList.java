@@ -18,6 +18,11 @@ public class TaskList implements Serializable {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Adds a Task to the list.
+     * 
+     * @param task The task to add.
+     */
     public void addTask(Task task) {
         tasks.add(task);
         // System.out.println(LINE + "Got it. I've added this task:\r\n " + task + "\r\n
@@ -29,18 +34,29 @@ public class TaskList implements Serializable {
         return tasks.size();
     }
 
+    /**
+     * Deletes a Task from the list.
+     *
+     * @param index The index of the task to delete.
+     * @return The deleted task.
+     * @throws BruhException If the task index is invalid.
+     */
     public Task deleteTask(int index) throws BruhException {
         if (index >= 0 && index < tasks.size()) {
             Task task = tasks.remove(index);
             return task;
-            // System.out.println(LINE + "Noted. I've removed this task:\r\n " + task +
-            // "\r\n " + "Now you have "
-            // + tasks.size() + " tasks in the list.\r\n" + LINE);
         } else {
             throw new BruhException("ERROR!!! invalid task number... try again");
         }
     }
 
+    /**
+     * Marks a task as done.
+     * 
+     * @param index The index of the task to mark as done.
+     * @return The marked task.
+     * @throws BruhException If the task index is invalid.
+     */
     public Task markTaskAsDone(int index) throws BruhException {
         if (index >= 0 && index < tasks.size()) {
             Task task = tasks.get(index);
@@ -53,6 +69,13 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Marks a task as not done.
+     *
+     * @param index The index of the task to mark as not done.
+     * @return The unmarked task.
+     * @throws BruhException If the task index is invalid.
+     */
     public Task markTaskAsNotDone(int index) throws BruhException {
         if (index >= 0 && index < tasks.size()) {
             Task task = tasks.get(index);
@@ -65,6 +88,13 @@ public class TaskList implements Serializable {
         }
     }
 
+    /**
+     * Returns the events ongoing on a specific date and deadlines due on that
+     * specific date.
+     *
+     * @param date The date to check.
+     * @return A list of tasks on the specified date.
+     */
     public ArrayList<Task> getTasksOnDate(LocalDate date) {
         ArrayList<Task> tasksOnDate = new ArrayList<>();
         for (Task task : tasks) {

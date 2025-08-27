@@ -19,7 +19,7 @@ import bruh.ui.Ui;
 public class Command {
     private CommandType type;
     private String commandArgument;
-    private boolean exit;
+    private boolean isExit;
 
     public enum CommandType {
         TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE
@@ -43,10 +43,23 @@ public class Command {
         return commandArgument;
     }
 
+    /**
+     * Checks if the command is an exit command.
+     *
+     * @return True if the command is an exit command, false otherwise.
+     */
     public boolean isExit() {
-        return exit;
+        return isExit;
     }
 
+    /**
+     * Executes the command.
+     *
+     * @param tasks The list of tasks to operate on.
+     * @param ui The user interface for displaying messages.
+     * @param storage The storage for saving/loading tasks.
+     * @throws BruhException If command input has invalid format.
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BruhException {
         if (type == null) {
             throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
@@ -55,7 +68,7 @@ public class Command {
         switch (type) {
         case BYE:
             ui.showFarewell();
-            exit = true;
+            isExit = true;
             break;
         case LIST:
             if (commandArgument.trim().isEmpty()) {
