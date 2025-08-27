@@ -7,7 +7,15 @@ import bruh.task.Task;
 
 public class Ui {
     private static final String LINE = "  ____________________________________________________________\r\n   ";
-    private Scanner scnr = new Scanner(System.in);
+    private Scanner scnr;
+
+    public Ui() {
+        this.scnr = new Scanner(System.in);
+    }
+
+    public Ui(Scanner scnr) {
+        this.scnr = scnr;
+    }
 
     public void showLine() {
         System.out.println(LINE);
