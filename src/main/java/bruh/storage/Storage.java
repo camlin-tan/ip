@@ -18,6 +18,12 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Saves the given tasks to the hard disk.
+     * 
+     * @param tasks ArrayList of tasks
+     * @throws BruhException
+     */
     public void save(Serializable tasks) throws BruhException {
         try {
             File taskFile = new File(filePath);
@@ -32,6 +38,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads the tasks from the hard disk.
+     * 
+     * @return ArrayList of tasks
+     * @throws BruhException
+     */
     @SuppressWarnings("unchecked")
     public Serializable load() throws BruhException {
         File taskFile = new File(filePath);
