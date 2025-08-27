@@ -7,6 +7,7 @@
 /.gradle/
 /build/
 src/main/resources/docs/
+build.gradle
 
 # MacOS custom attributes files created by Finder
 .DS_Store
@@ -23,5 +24,7 @@ bin/
 text-ui-test/EXPECTED-UNIX.TXT
 
 /src/main/java/bruh/data/
+
+tasks.txt
 
 
