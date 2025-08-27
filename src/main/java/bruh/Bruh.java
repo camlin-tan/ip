@@ -27,8 +27,9 @@ public class Bruh {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
-//    private static final String LINE = "  ____________________________________________________________\r\n   ";
-//    private static ArrayList<Task> listStrings = new ArrayList<>();
+    // private static final String LINE = "
+    // ____________________________________________________________\r\n ";
+    // private static ArrayList<Task> listStrings = new ArrayList<>();
 
     // public enum Command {
     // TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, ECHO, BYE
@@ -45,15 +46,15 @@ public class Bruh {
         }
     }
 
-//    public static void echo() {
-//        Scanner scnr = new Scanner(System.in);
-//        String userInput = scnr.nextLine();
-//        while (!userInput.equalsIgnoreCase("bye")) {
-//            String response = LINE + userInput + "\r\n" + LINE;
-//            System.out.println(response);
-//            userInput = scnr.nextLine();
-//        }
-//    }
+    // public static void echo() {
+    // Scanner scnr = new Scanner(System.in);
+    // String userInput = scnr.nextLine();
+    // while (!userInput.equalsIgnoreCase("bye")) {
+    // String response = LINE + userInput + "\r\n" + LINE;
+    // System.out.println(response);
+    // userInput = scnr.nextLine();
+    // }
+    // }
 
     // public static void saveTasksToHardDisk() {
     // try {

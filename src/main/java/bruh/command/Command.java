@@ -19,7 +19,7 @@ import bruh.ui.Ui;
 public class Command {
     private CommandType type;
     private String commandArgument;
-    private boolean exit;
+    private boolean isExit;
 
     public enum CommandType {
         TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE
@@ -44,7 +44,7 @@ public class Command {
     }
 
     public boolean isExit() {
-        return exit;
+        return isExit;
     }
 
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BruhException {
@@ -55,7 +55,7 @@ public class Command {
         switch (type) {
         case BYE:
             ui.showFarewell();
-            exit = true;
+            isExit = true;
             break;
         case LIST:
             if (commandArgument.trim().isEmpty()) {
