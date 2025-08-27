@@ -4,6 +4,13 @@ import bruh.command.Command;
 import bruh.exception.BruhException;
 
 public class Parser {
+    /**
+     * Parses a command string into a Command object.
+     *
+     * @param commString The command string to parse.
+     * @return A Command object representing the parsed command.
+     * @throws BruhException If the command string is invalid.
+     */
     public static Command parse(String commString) throws BruhException {
         String[] parts = commString.split(" ", 2);
         String commandType = parts[0].trim();
