@@ -18,5 +18,4 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (from: " + start.format(FORMATTER) + " to: " + end.format(FORMATTER) + ")";
     }
-
 }
