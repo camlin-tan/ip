@@ -22,7 +22,7 @@ public class Command {
     private boolean exit;
 
     public enum CommandType {
-        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE
+        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE, FIND
     }
 
     public Command(String type, String commandArgument) throws BruhException {
@@ -172,6 +172,16 @@ public class Command {
                                 + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
                     }
                 }
+            }
+            break;
+        case FIND:
+            String keyword = commandArgument.trim();
+            ArrayList<Task> matchingTasks = tasks.getTasksByKeyword(keyword);
+            if (matchingTasks.isEmpty()) {
+                ui.showMessage("No tasks matching keyword: " + keyword);
+            } else {
+                ui.showMessage("Here are the matching tasks in your list:");
+                ui.listTasks(matchingTasks);
             }
             break;
         default:
