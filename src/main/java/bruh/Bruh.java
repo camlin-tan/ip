@@ -8,6 +8,9 @@ import bruh.storage.Storage;
 import bruh.task.TaskList;
 import bruh.ui.Ui;
 
+/**
+ * Represents the main entry point of the application.
+ */
 public class Bruh {
     private Storage storage;
     private TaskList tasks;

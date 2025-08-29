@@ -3,6 +3,9 @@ package bruh.parser;
 import bruh.command.Command;
 import bruh.exception.BruhException;
 
+/**
+ * Parses command strings into Command objects.
+ */
 public class Parser {
     /**
      * Parses a command string into a Command object.

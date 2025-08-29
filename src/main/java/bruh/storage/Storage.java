@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import bruh.exception.BruhException;
 
+/**
+ * Handles the loading and saving of tasks to and from the hard disk.
+ */
 public class Storage {
     private String filePath;
 

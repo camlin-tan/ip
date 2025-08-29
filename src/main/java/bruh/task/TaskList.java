@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import bruh.exception.BruhException;
 
+/**
+ * Represents a list of tasks.
+ */
 public class TaskList implements Serializable {
     private ArrayList<Task> tasks;
 
