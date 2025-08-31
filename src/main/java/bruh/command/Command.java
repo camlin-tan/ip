@@ -24,6 +24,9 @@ public class Command {
     private String commandArgument;
     private boolean isExit;
 
+    /**
+     * Represents types of commands Bruh can take in
+     */
     public enum CommandType {
         TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE, FIND
     }
@@ -47,7 +50,7 @@ public class Command {
 
     /**
      * Returns the type of command.
-     * 
+     *
      * @return type the type of command
      */
     public CommandType getType() {
