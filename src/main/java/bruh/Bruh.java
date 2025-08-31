@@ -50,6 +50,9 @@ public class Bruh {
         }
     }
 
+    /**
+     * The main entry point of the application.
+     */
     public static void main(String[] args) {
         new Bruh("data/tasks.txt").run();
     }

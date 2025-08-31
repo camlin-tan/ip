@@ -23,11 +23,18 @@ public class Command {
     private CommandType type;
     private String commandArgument;
     private boolean isExit;
-    
+
     public enum CommandType {
         TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE, FIND
     }
 
+    /**
+     * Constructs a new Command instance.
+     *
+     * @param type type of command
+     * @param commandArgument argument of command
+     * @throws BruhException
+     */
     public Command(String type, String commandArgument) throws BruhException {
         try {
             this.type = CommandType.valueOf(type.toUpperCase());
@@ -38,10 +45,20 @@ public class Command {
         }
     }
 
+    /**
+     * Returns the type of command.
+     * 
+     * @return type the type of command
+     */
     public CommandType getType() {
         return type;
     }
 
+    /**
+     * Returns the command argument.
+     * 
+     * @return commandArgument
+     */
     public String getCommandArgument() {
         return commandArgument;
     }
@@ -78,8 +95,7 @@ public class Command {
                 ui.listTasks(tasks.getTasks());
             } else {
                 try {
-                    LocalDate date = LocalDate.parse(commandArgument.trim(),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    LocalDate date = LocalDate.parse(commandArgument.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     ArrayList<Task> tasksOnDate = tasks.getTasksOnDate(date);
                     ui.listTasks(tasksOnDate);
                 } catch (DateTimeParseException e) {

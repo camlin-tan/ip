@@ -17,6 +17,11 @@ import bruh.exception.BruhException;
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a new Storage instance.
+     * 
+     * @param filePath
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
