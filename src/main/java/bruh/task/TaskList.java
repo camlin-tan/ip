@@ -12,11 +12,19 @@ import bruh.exception.BruhException;
 public class TaskList implements Serializable {
     private ArrayList<Task> tasks;
 
+    /**
+     * Constructs a new TaskList instance.
+     *
+     * @param tasks The list of tasks.
+     */
     @SuppressWarnings("unchecked")
     public TaskList(Serializable tasks) {
         this.tasks = (ArrayList<Task>) tasks;
     }
 
+    /**
+     * Constructs a new TaskList instance.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
@@ -33,6 +41,11 @@ public class TaskList implements Serializable {
         // + tasks.size() + " tasks in the list.\r\n" + LINE);
     }
 
+    /**
+     * Returns the number of tasks in the list.
+     * 
+     * @return the number of tasks in the list
+     */
     public int size() {
         return tasks.size();
     }
@@ -133,6 +146,11 @@ public class TaskList implements Serializable {
         return matchingTasks;
     }
 
+    /**
+     * Returns the list of tasks.
+     * 
+     * @return the list of tasks
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }

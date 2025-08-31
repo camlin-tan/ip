@@ -4,7 +4,6 @@ import bruh.command.Command;
 import bruh.exception.BruhException;
 import bruh.parser.Parser;
 import bruh.storage.Storage;
-
 import bruh.task.TaskList;
 import bruh.ui.Ui;
 
@@ -16,6 +15,9 @@ public class Bruh {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs a new Bruh instance.
+     */
     public Bruh(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -48,6 +50,9 @@ public class Bruh {
         }
     }
 
+    /**
+     * The main entry point of the application.
+     */
     public static void main(String[] args) {
         new Bruh("data/tasks.txt").run();
     }
