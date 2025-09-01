@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 import bruh.task.Task;
 
+/**
+ * User Interface for the application
+ */
 public class Ui {
     private static final String LINE = "  ____________________________________________________________\r\n   ";
     private Scanner scnr;
@@ -21,37 +24,44 @@ public class Ui {
         System.out.println(LINE);
     }
 
-    public void showWelcome() {
+    public String showWelcome() {
         System.out.println(LINE + "Hello! I'm Bruh");
         System.out.println("   What can I do for you?\r\n" + LINE);
+        return LINE + "Hello! I'm Bruh   What can I do for you?\r\n" + LINE;
     }
 
-    public void showFarewell() {
+    public String showFarewell() {
         System.out.println(LINE + "Bye. Hope to see you again soon!\r\n" + LINE);
+        return LINE + "Bye. Hope to see you again soon!\r\n" + LINE;
     }
 
-    public void listTasks(ArrayList<Task> tasks) {
+    public String listTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             System.out.println(LINE + "No tasks in the list yet or for date specified.\r\n" + LINE);
+            return LINE + "No tasks in the list yet or for date specified.\r\n" + LINE;
         } else {
             String itemsString = "";
             for (int i = 0; i < tasks.size(); i++) {
                 itemsString += ((i + 1) + ". " + tasks.get(i) + "\r\n   ");
             }
             System.out.println(LINE + itemsString.trim() + "\r\n" + LINE);
+            return LINE + itemsString.trim() + "\r\n" + LINE;
         }
     }
 
-    public void showError(String message) {
+    public String showError(String message) {
         System.out.println(LINE + message + "\r\n" + LINE);
+        return LINE + message + "\r\n" + LINE;
     }
 
-    public void showLoadingError(String message) {
+    public String showLoadingError(String message) {
         System.out.println("Error loading tasks from hard disk: " + message);
+        return "Error loading tasks from hard disk: " + message;
     }
 
-    public void showMessage(String message) {
+    public String showMessage(String message) {
         System.out.println(LINE + message + "\r\n" + LINE);
+        return LINE + message + "\r\n" + LINE;
     }
 
     public String readCommand() {
