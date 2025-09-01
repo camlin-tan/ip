@@ -1,5 +1,3 @@
-package bruh;
-
 import javafx.application.Application;
 
 /**

@@ -1,7 +1,6 @@
-package bruh;
-
 import java.io.IOException;
 
+import bruh.Bruh;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,16 +12,16 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Bruh duke = new Bruh();
+    private Bruh bruh = new Bruh("data/tasks.txt");
 
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/resources/view/MainWindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDuke(duke);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setBruh(bruh);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

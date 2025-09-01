@@ -50,6 +50,10 @@ public class Bruh {
         }
     }
 
+    public String getResponse(String input) {
+        return input;
+    }
+
     /**
      * The main entry point of the application.
      */
