@@ -23,7 +23,9 @@ bin/
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
 
-/src/main/java/bruh/data/
+#/src/main/java/bruh/data/
+
+/src/main/resources/data/
 
 tasks.txt
 

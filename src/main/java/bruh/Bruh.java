@@ -51,7 +51,18 @@ public class Bruh {
     }
 
     public String getResponse(String input) {
-        return input;
+        try {
+            Command c = Parser.parse(input);
+            String outputString = c.execute(tasks, ui, storage);
+            boolean isExit = c.isExit();
+            if (isExit) {
+                return null;
+            }
+            return outputString;
+        } catch (BruhException e) {
+            String outputString = ui.showError(e.getMessage());
+            return outputString;
+        }
     }
 
     /**

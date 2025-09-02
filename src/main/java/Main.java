@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Bruh bruh = new Bruh("data/tasks.txt");
+    private Bruh bruh = new Bruh("src/main/resources/data/tasks.txt");
 
     @Override
     public void start(Stage stage) {
