@@ -29,10 +29,8 @@ public class UiTest {
     @Test
     public void listTasks_emptyList_success() {
         ui.listTasks(new ArrayList<>());
-        assertEquals("  ____________________________________________________________\r\n   "
-                        + "No tasks in the list yet or for date specified.\r\n"
-                        + "  ____________________________________________________________\r\n   \r\n"
-                , outContent.toString()
+        assertEquals("No tasks in the list yet or for date specified."
+                , outContent.toString().trim()
                 , "Output print should be equal");
     }
 
