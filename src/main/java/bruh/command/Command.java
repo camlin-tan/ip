@@ -78,13 +78,12 @@ public class Command {
     /**
      * Executes the list command, listing all tasks in tasklist.
      * 
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeListCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeListCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.trim().isEmpty()) {
             outputString = ui.listTasks(tasks.getTasks());
@@ -105,13 +104,12 @@ public class Command {
     /**
      * Executes the mark command, marking a task as done.
      * 
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeMarkCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeMarkCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.trim().isEmpty()) {
             throw new BruhException(
@@ -131,13 +129,12 @@ public class Command {
     /**
      * Executes the unmark command, marking a task as not done.
      *
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeUnmarkCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeUnmarkCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.trim().isEmpty()) {
             throw new BruhException("ERROR!!! task number cannot be empty...\r\n   "
@@ -157,13 +154,12 @@ public class Command {
     /**
      * Executes the delete command, deleting a task from tasklist.
      *
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeDeleteCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeDeleteCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.isEmpty()) {
             throw new BruhException("ERROR!!! task number cannot be empty...\r\n   "
@@ -184,13 +180,12 @@ public class Command {
     /**
      * Executes the find command, finding tasks that match the keyword.
      * 
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeFindCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeFindCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         String keyword = commandArgument.trim();
         ArrayList<Task> matchingTasks = tasks.getTasksByKeyword(keyword);
@@ -206,13 +201,12 @@ public class Command {
     /**
      * Executes the todo command, adding a todo task to tasklist.
      *
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeTodoCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeTodoCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.isEmpty()) {
             throw new BruhException("ERROR!!! The description of a todo cannot be empty.\r\n   "
@@ -229,13 +223,12 @@ public class Command {
     /**
      * Executes the deadline command, adding a deadline task to tasklist.
      * 
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeDeadlineCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeDeadlineCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         String[] partsDeadline = commandArgument.split(" /by ", 2);
         if (commandArgument.isEmpty() || partsDeadline.length < 2) {
@@ -260,13 +253,12 @@ public class Command {
     /**
      * Executes the event command, adding an event task to tasklist.
      *
-     * @param tasks   the list of tasks
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks the list of tasks
+     * @param ui    the user interface
      * @return outputString the output message after executing the command
      * @throws BruhException
      */
-    public String executeEventCommand(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+    public String executeEventCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         String[] eventParts = commandArgument.split(" /from ", 2);
         if (eventParts.length < 2) {
@@ -316,28 +308,28 @@ public class Command {
             isExit = true;
             break;
         case LIST:
-            outputString = executeListCommand(tasks, ui, storage);
+            outputString = executeListCommand(tasks, ui);
             break;
         case MARK:
-            outputString = executeMarkCommand(tasks, ui, storage);
+            outputString = executeMarkCommand(tasks, ui);
             break;
         case UNMARK:
-            outputString = executeUnmarkCommand(tasks, ui, storage);
+            outputString = executeUnmarkCommand(tasks, ui);
             break;
         case DELETE:
-            outputString = executeDeleteCommand(tasks, ui, storage);
+            outputString = executeDeleteCommand(tasks, ui);
             break;
         case TODO:
-            outputString = executeTodoCommand(tasks, ui, storage);
+            outputString = executeTodoCommand(tasks, ui);
             break;
         case DEADLINE:
-            outputString = executeDeadlineCommand(tasks, ui, storage);
+            outputString = executeDeadlineCommand(tasks, ui);
             break;
         case EVENT:
-            outputString = executeEventCommand(tasks, ui, storage);
+            outputString = executeEventCommand(tasks, ui);
             break;
         case FIND:
-            outputString = executeFindCommand(tasks, ui, storage);
+            outputString = executeFindCommand(tasks, ui);
             break;
         default:
             throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
