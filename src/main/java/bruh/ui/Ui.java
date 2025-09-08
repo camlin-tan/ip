@@ -2,6 +2,7 @@ package bruh.ui;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import bruh.task.Task;
 
@@ -9,7 +10,8 @@ import bruh.task.Task;
  * User Interface for the application
  */
 public class Ui {
-    //private static final String LINE = "  ____________________________________________________________\r\n   ";
+    // private static final String LINE = "
+    // ____________________________________________________________\r\n ";
     private static final String LINE = "   ";
     private Scanner scnr;
 
@@ -69,9 +71,8 @@ public class Ui {
             return LINE + "No tasks in the list yet or for date specified.\r\n" + LINE;
         } else {
             String itemsString = "";
-            for (int i = 0; i < tasks.size(); i++) {
-                itemsString += ((i + 1) + ". " + tasks.get(i) + "\r\n   ");
-            }
+            itemsString = IntStream.range(0, tasks.size()).mapToObj(i -> (i + 1) + ". " + tasks.get(i) + "\r\n   ")
+                    .reduce("", (s1, s2) -> s1 + s2);
             System.out.println(LINE + itemsString.trim() + "\r\n" + LINE);
             return LINE + itemsString.trim() + "\r\n" + LINE;
         }
