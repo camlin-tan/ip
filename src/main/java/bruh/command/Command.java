@@ -85,6 +85,10 @@ public class Command {
      * @throws BruhException If command input has invalid format.
      */
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BruhException {
+        assert tasks != null : "TaskList should not be null";
+        assert ui != null : "Ui should not be null";
+        assert storage != null : "Storage should not be null";
+        assert type != null : "Command type should not be null";
         String outputString = "";
         if (type == null) {
             throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
