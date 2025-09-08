@@ -25,7 +25,7 @@ public class Ui {
     /**
      * Constructor for Ui with custom Scanner
      * 
-     * @param scnr
+     * @param scnr Scanner object
      */
     public Ui(Scanner scnr) {
         this.scnr = scnr;
@@ -41,7 +41,7 @@ public class Ui {
     /**
      * Show welcome message
      * 
-     * @return
+     * @return welcome message
      */
     public String showWelcome() {
         System.out.println(LINE + "Hello! I'm Bruh");
@@ -52,7 +52,7 @@ public class Ui {
     /**
      * Show farewell message
      * 
-     * @return
+     * @return farewell message
      */
     public String showFarewell() {
         System.out.println(LINE + "Bye. Hope to see you again soon!\r\n" + LINE);
@@ -62,8 +62,8 @@ public class Ui {
     /**
      * List all tasks
      * 
-     * @param tasks
-     * @return
+     * @param tasks list of tasks
+     * @return list of tasks
      */
     public String listTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
@@ -81,8 +81,8 @@ public class Ui {
     /**
      * Show error message
      * 
-     * @param message
-     * @return
+     * @param message error message
+     * @return error message
      */
     public String showError(String message) {
         System.out.println(LINE + message + "\r\n" + LINE);
@@ -92,8 +92,8 @@ public class Ui {
     /**
      * Show loading error message
      * 
-     * @param message
-     * @return
+     * @param message error message
+     * @return loading error message
      */
     public String showLoadingError(String message) {
         System.out.println("Error loading tasks from hard disk: " + message);
@@ -103,8 +103,8 @@ public class Ui {
     /**
      * Show a generic message
      * 
-     * @param message
-     * @return
+     * @param message message
+     * @return generic message
      */
     public String showMessage(String message) {
         System.out.println(LINE + message + "\r\n" + LINE);
@@ -114,7 +114,7 @@ public class Ui {
     /**
      * Read user command
      * 
-     * @return
+     * @return user command
      */
     public String readCommand() {
         // System.out.print("Enter command: ");
