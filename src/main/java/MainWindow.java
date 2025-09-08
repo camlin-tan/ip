@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -33,10 +34,14 @@ public class MainWindow extends AnchorPane {
     /** Injects the Duke instance */
     public void setBruh(Bruh d) {
         bruh = d;
+        assert bruh != null : "Bruh instance has not been injected";
+        dialogContainer.getChildren().add(
+                DialogBox.getDukeDialog(bruh.getWelcomeMessage(), dukeImage));
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing
+     * Duke's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -48,8 +53,7 @@ public class MainWindow extends AnchorPane {
         }
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
-        );
+                DialogBox.getDukeDialog(response, dukeImage));
         userInput.clear();
     }
 }

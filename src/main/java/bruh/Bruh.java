@@ -65,6 +65,10 @@ public class Bruh {
         }
     }
 
+    public String getWelcomeMessage() {
+        return ui.showWelcome();
+    }
+
     /**
      * The main entry point of the application.
      */
