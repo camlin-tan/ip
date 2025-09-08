@@ -14,11 +14,13 @@ public class Deadline extends Task {
      * Constructs a new Deadline instance.
      * 
      * @param description description of deadline
-     * @param by due date of deadline
+     * @param by          due date of deadline
      */
     public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
+        assert description != null : "Description should not be null";
+        assert by != null : "Due date should not be null";
     }
 
     @Override
