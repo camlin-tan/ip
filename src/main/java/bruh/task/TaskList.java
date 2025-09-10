@@ -151,7 +151,17 @@ public class TaskList implements Serializable {
      * by their due date. Todos remain in their original order.
      */
     public void sortTasksByDate() {
-        tasks.sort((task1, task2) -> {
+        ArrayList<Task> todos = new ArrayList<>();
+        ArrayList<Task> dated = new ArrayList<>();
+
+        for (Task task : tasks) {
+            if (task instanceof Todo) {
+                todos.add(task);
+            } else {
+                dated.add(task);
+            }
+        }
+        dated.sort((task1, task2) -> {
             if (task1 instanceof Event && task2 instanceof Event) {
                 Event event1 = (Event) task1;
                 Event event2 = (Event) task2;
@@ -169,9 +179,12 @@ public class TaskList implements Serializable {
                 Event event = (Event) task2;
                 return deadline.by.compareTo(event.start);
             } else {
-                return 0; // Keep the original order for Todo tasks
+                return 0;
             }
         });
+        tasks.clear();
+        tasks.addAll(dated);
+        tasks.addAll(todos);
     }
 
     /**
