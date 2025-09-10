@@ -28,7 +28,7 @@ public class Command {
      * Represents types of commands Bruh can take in
      */
     public enum CommandType {
-        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE, FIND
+        TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, LIST, BYE, FIND, SORT
     }
 
     /**
@@ -220,6 +220,25 @@ public class Command {
         return outputString;
     }
 
+    public String executeSortCommand(TaskList tasks, Ui ui) throws BruhException {
+        String outputString = "";
+        if (commandArgument.isEmpty()) {
+            throw new BruhException("ERROR!!! Invalid sort command format.\r\n   "
+                    + "Please use \'sort date\' or \'sort alphabet\' and try again");
+        }
+        if (commandArgument.equals("date")) {
+            tasks.sortTasksByDate();
+            outputString = ui.showMessage("Tasks have been sorted by date.");
+        } else if (commandArgument.equals("alphabet")) {
+            tasks.sortTasksByAlphabet();
+            outputString = ui.showMessage("Tasks have been sorted alphabetically.");
+        } else {
+            throw new BruhException("ERROR!!! Invalid sort command format.\r\n   "
+                    + "Please use \'sort date\' or \'sort alphabet\' and try again");
+        }
+        return outputString;
+    }
+
     /**
      * Executes the deadline command, adding a deadline task to tasklist.
      * 
@@ -334,6 +353,9 @@ public class Command {
             break;
         case FIND:
             outputString = executeFindCommand(tasks, ui);
+            break;
+        case SORT:
+            outputString = executeSortCommand(tasks, ui);
             break;
         default:
             throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
