@@ -147,6 +147,41 @@ public class TaskList implements Serializable {
     }
 
     /**
+     * Sorts the tasks by date. Events are sorted by their start date and Deadlines
+     * by their due date. Todos remain in their original order.
+     */
+    public void sortTasksByDate() {
+        tasks.sort((task1, task2) -> {
+            if (task1 instanceof Event && task2 instanceof Event) {
+                Event event1 = (Event) task1;
+                Event event2 = (Event) task2;
+                return event1.start.compareTo(event2.start);
+            } else if (task1 instanceof Deadline && task2 instanceof Deadline) {
+                Deadline deadline1 = (Deadline) task1;
+                Deadline deadline2 = (Deadline) task2;
+                return deadline1.by.compareTo(deadline2.by);
+            } else if (task1 instanceof Event && task2 instanceof Deadline) {
+                Event event = (Event) task1;
+                Deadline deadline = (Deadline) task2;
+                return event.start.compareTo(deadline.by);
+            } else if (task1 instanceof Deadline && task2 instanceof Event) {
+                Deadline deadline = (Deadline) task1;
+                Event event = (Event) task2;
+                return deadline.by.compareTo(event.start);
+            } else {
+                return 0; // Keep the original order for Todo tasks
+            }
+        });
+    }
+
+    /**
+     * Sorts the tasks alphabetically by their description.
+     */
+    public void sortTasksByAlphabet() {
+        tasks.sort((task1, task2) -> task1.getDescription().compareTo(task2.getDescription()));
+    }
+
+    /**
      * Returns the list of tasks.
      * 
      * @return the list of tasks
