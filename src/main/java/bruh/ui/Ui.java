@@ -46,7 +46,7 @@ public class Ui {
     public String showWelcome() {
         System.out.println(LINE + "Hello! I'm Bruh");
         System.out.println("   What can I do for you?\r\n" + LINE);
-        return LINE + "Hello! I'm Bruh   What can I do for you?\r\n" + LINE;
+        return "Hello! I'm Bruh, What can I do for you?\r\n";
     }
 
     /**
@@ -56,7 +56,7 @@ public class Ui {
      */
     public String showFarewell() {
         System.out.println(LINE + "Bye. Hope to see you again soon!\r\n" + LINE);
-        return LINE + "Bye. Hope to see you again soon!\r\n" + LINE;
+        return "Bye. Hope to see you again soon!\r\n";
     }
 
     /**
@@ -71,10 +71,10 @@ public class Ui {
             return LINE + "No tasks in the list yet or for date specified.\r\n" + LINE;
         } else {
             String itemsString = "";
-            itemsString = IntStream.range(0, tasks.size()).mapToObj(i -> (i + 1) + ". " + tasks.get(i) + "\r\n   ")
+            itemsString = IntStream.range(0, tasks.size()).mapToObj(i -> (i + 1) + ". " + tasks.get(i) + "\r\n")
                     .reduce("", (s1, s2) -> s1 + s2);
             System.out.println(LINE + itemsString.trim() + "\r\n" + LINE);
-            return LINE + itemsString.trim() + "\r\n" + LINE;
+            return itemsString.trim() + "\r\n";
         }
     }
 
@@ -86,7 +86,7 @@ public class Ui {
      */
     public String showError(String message) {
         System.out.println(LINE + message + "\r\n" + LINE);
-        return LINE + message + "\r\n" + LINE;
+        return message + "\r\n";
     }
 
     /**
@@ -108,7 +108,7 @@ public class Ui {
      */
     public String showMessage(String message) {
         System.out.println(LINE + message + "\r\n" + LINE);
-        return LINE + message + "\r\n" + LINE;
+        return message + "\r\n";
     }
 
     /**
