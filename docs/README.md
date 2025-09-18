@@ -309,4 +309,3 @@ Closes the app.
 | `Invalid format for deadline/event` | You’re missing `/by`, `/from`, or `/to` - or used the wrong format. |
 
 ---
-```
