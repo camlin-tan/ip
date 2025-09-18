@@ -43,8 +43,8 @@ public class Command {
             this.type = CommandType.valueOf(type.toUpperCase());
             this.commandArgument = commandArgument;
         } catch (IllegalArgumentException e) {
-            throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
-                    + "todo, deadline, event, mark, unmark, list, bye");
+            throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n"
+                    + "todo, deadline, event, mark, unmark, list, bye, find, sort");
         }
     }
 
@@ -94,7 +94,7 @@ public class Command {
                 outputString = ui.listTasks(tasksOnDate);
             } catch (DateTimeParseException e) {
                 throw new BruhException(
-                        "Invalid date format\r\n   Pls use in form \'list {date}\' or \'list\' and try again\r\n   "
+                        "Invalid date format\r\nPls use in form \'list {date}\' or \'list\' and try again\r\n"
                                 + "Please use format of time: yyyy-MM-dd (e.g. 2023-03-15)");
             }
         }
@@ -113,15 +113,14 @@ public class Command {
         String outputString = "";
         if (commandArgument.trim().isEmpty()) {
             throw new BruhException(
-                    "u want mark what? air ah?\r\n   Pls use in form \'mark {task-number}\' and try again");
+                    "u want mark what? air ah?\r\nPls use in form \'mark {task-number}\' and try again");
         }
         try {
             Integer index = !commandArgument.isEmpty() ? Integer.parseInt(commandArgument.trim()) - 1 : -1;
             Task task = tasks.markTaskAsDone(index);
-            outputString = ui.showMessage("Nice! I've marked this task as done:\r\n   " + task);
+            outputString = ui.showMessage("Nice! I've marked this task as done:\r\n" + task);
         } catch (NumberFormatException e) {
-            throw new BruhException(
-                    "Idk what u tryna mark...\r\n   Pls use in form \'mark {task-number}\' and try again");
+            throw new BruhException("Idk what u tryna mark...\r\nPls use in form \'mark {task-number}\' and try again");
         }
         return outputString;
     }
@@ -137,13 +136,13 @@ public class Command {
     public String executeUnmarkCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.trim().isEmpty()) {
-            throw new BruhException("ERROR!!! task number cannot be empty...\r\n   "
+            throw new BruhException("ERROR!!! task number cannot be empty...\r\n"
                     + "Pls use in form \'unmark {task-number}\' and try again");
         }
         try {
             Integer index = !commandArgument.isEmpty() ? Integer.parseInt(commandArgument.trim()) - 1 : -1;
             Task task = tasks.markTaskAsNotDone(index);
-            outputString = ui.showMessage("Sike! Task actually not done yet:\r\n   " + task);
+            outputString = ui.showMessage("Sike! Task actually not done yet:\r\n" + task);
         } catch (NumberFormatException e) {
             throw new BruhException(
                     "Idk what u tryna unmark... pls use in form \\'mark {task-number}\\' and try again");
@@ -162,14 +161,14 @@ public class Command {
     public String executeDeleteCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.isEmpty()) {
-            throw new BruhException("ERROR!!! task number cannot be empty...\r\n   "
+            throw new BruhException("ERROR!!! task number cannot be empty...\r\n"
                     + "Pls use in form \'delete {task-number}\' and try again");
         }
         try {
             Integer index = !commandArgument.isEmpty() ? Integer.parseInt(commandArgument.trim()) - 1 : -1;
             Task deletedTask = tasks.deleteTask(index);
-            outputString = ui.showMessage("Noted. I've removed this task:\r\n   " + deletedTask + "\r\n   "
-                    + "Now you have " + tasks.size() + " tasks in the list.");
+            outputString = ui.showMessage("Noted. I've removed this task:\r\n" + deletedTask + "\r\n" + "Now you have "
+                    + tasks.size() + " tasks in the list.");
         } catch (NumberFormatException e) {
             throw new BruhException(
                     "Idk what u tryna delete... pls use in form \\'delete {task-number}\\' and try again");
@@ -209,12 +208,12 @@ public class Command {
     public String executeTodoCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.isEmpty()) {
-            throw new BruhException("ERROR!!! The description of a todo cannot be empty.\r\n   "
+            throw new BruhException("ERROR!!! The description of a todo cannot be empty.\r\n"
                     + "Please use in form \'todo {task-name}\' and try again");
         } else {
             Todo todo = new Todo(commandArgument);
             tasks.addTask(todo);
-            outputString = ui.showMessage("Got it. I've added this task:\r\n   " + todo + "\r\n   " + "Now you have "
+            outputString = ui.showMessage("Got it. I've added this task:\r\n" + todo + "\r\n" + "Now you have "
                     + tasks.size() + " tasks in the list.");
         }
         return outputString;
@@ -223,7 +222,7 @@ public class Command {
     public String executeSortCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.isEmpty()) {
-            throw new BruhException("ERROR!!! Invalid sort command format.\r\n   "
+            throw new BruhException("ERROR!!! Invalid sort command format.\r\n"
                     + "Please use \'sort date\' or \'sort alphabet\' and try again");
         }
         if (commandArgument.equals("date")) {
@@ -233,7 +232,7 @@ public class Command {
             tasks.sortTasksByAlphabet();
             outputString = ui.showMessage("Tasks have been sorted alphabetically.");
         } else {
-            throw new BruhException("ERROR!!! Invalid sort command format.\r\n   "
+            throw new BruhException("ERROR!!! Invalid sort command format.\r\n"
                     + "Please use \'sort date\' or \'sort alphabet\' and try again");
         }
         return outputString;
@@ -251,19 +250,19 @@ public class Command {
         String outputString = "";
         String[] partsDeadline = commandArgument.split(" /by ", 2);
         if (commandArgument.isEmpty() || partsDeadline.length < 2) {
-            throw new BruhException("ERROR!!! Invalid format for deadline\r\n   "
-                    + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+            throw new BruhException("ERROR!!! Invalid format for deadline\r\n"
+                    + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n"
                     + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
         }
         try {
             LocalDateTime by = DateTimeParser.parse(partsDeadline[1].trim());
             Deadline deadline = new Deadline(partsDeadline[0].trim(), by);
             tasks.addTask(deadline);
-            outputString = ui.showMessage("Got it. I've added this task:\r\n   " + deadline + "\r\n   "
-                    + "Now you have " + tasks.size() + " tasks in the list.");
+            outputString = ui.showMessage("Got it. I've added this task:\r\n" + deadline + "\r\n" + "Now you have "
+                    + tasks.size() + " tasks in the list.");
         } catch (DateTimeParseException e) {
-            throw new BruhException("ERROR!!! Invalid date format for deadline\r\n   "
-                    + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+            throw new BruhException("ERROR!!! Invalid date format for deadline\r\n"
+                    + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n"
                     + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
         }
         return outputString;
@@ -281,14 +280,14 @@ public class Command {
         String outputString = "";
         String[] eventParts = commandArgument.split(" /from ", 2);
         if (eventParts.length < 2) {
-            throw new BruhException("ERROR!!! Invalid input for event.\r\n   "
-                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+            throw new BruhException("ERROR!!! Invalid input for event.\r\n"
+                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n"
                     + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
         }
         String[] timeParts = eventParts[1].split(" /to ", 2);
         if (timeParts.length < 2) {
-            throw new BruhException("ERROR!!! The start and end time not specified properly.\r\n   "
-                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+            throw new BruhException("ERROR!!! The start and end time not specified properly.\r\n"
+                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n"
                     + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
         }
         try {
@@ -296,11 +295,11 @@ public class Command {
             LocalDateTime to = DateTimeParser.parse(timeParts[1].trim());
             Event event = new Event(eventParts[0].trim(), from, to);
             tasks.addTask(event);
-            outputString = ui.showMessage("Got it. I've added this task:\r\n   " + event + "\r\n   " + "Now you have "
+            outputString = ui.showMessage("Got it. I've added this task:\r\n" + event + "\r\n" + "Now you have "
                     + tasks.size() + " tasks in the list.");
         } catch (DateTimeParseException e) {
-            throw new BruhException("ERROR!!! Invalid date format for event\r\n   "
-                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n   "
+            throw new BruhException("ERROR!!! Invalid date format for event\r\n"
+                    + "Please use in form \'event {task-name} /from {start-time} /to {end-time}\' and try again\r\n"
                     + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)");
         }
         return outputString;
@@ -322,8 +321,8 @@ public class Command {
         assert type != null : "Command type should not be null";
         String outputString = "";
         if (type == null) {
-            throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
-                    + "todo, deadline, event, mark, unmark, list, bye");
+            throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n"
+                    + "todo, deadline, event, mark, unmark, list, bye, find, sort");
         }
         switch (type) {
         case BYE:
@@ -358,8 +357,8 @@ public class Command {
             outputString = executeSortCommand(tasks, ui);
             break;
         default:
-            throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n   "
-                    + "todo, deadline, event, mark, unmark, list, bye");
+            throw new BruhException("Idk what u tryna say, pls try again with one of the commands:\r\n"
+                    + "todo, deadline, event, mark, unmark, list, bye, find, sort");
         }
         storage.save(tasks.getTasks());
         return outputString;
