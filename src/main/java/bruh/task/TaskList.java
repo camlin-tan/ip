@@ -97,8 +97,6 @@ public class TaskList implements Serializable {
             Task task = tasks.get(index);
             task.markAsNotDone();
             return task;
-            // System.out.println(LINE + "Sike! Task actually not done yet:\r\n " + task +
-            // "\r\n" + LINE);
         } else {
             throw new BruhException("ERROR!!! invalid task number... try again");
         }

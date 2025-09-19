@@ -10,8 +10,6 @@ import bruh.task.Task;
  * User Interface for the application
  */
 public class Ui {
-    // private static final String LINE = "
-    // ____________________________________________________________\r\n ";
     private static final String LINE = "   ";
     private Scanner scnr;
 
@@ -117,7 +115,6 @@ public class Ui {
      * @return user command
      */
     public String readCommand() {
-        // System.out.print("Enter command: ");
         return scnr.nextLine();
     }
 }
