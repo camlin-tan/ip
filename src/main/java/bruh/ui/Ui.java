@@ -22,7 +22,7 @@ public class Ui {
 
     /**
      * Constructor for Ui with custom Scanner
-     * 
+     *
      * @param scnr Scanner object
      */
     public Ui(Scanner scnr) {
@@ -38,7 +38,7 @@ public class Ui {
 
     /**
      * Show welcome message
-     * 
+     *
      * @return welcome message
      */
     public String showWelcome() {
@@ -49,7 +49,7 @@ public class Ui {
 
     /**
      * Show farewell message
-     * 
+     *
      * @return farewell message
      */
     public String showFarewell() {
@@ -59,7 +59,7 @@ public class Ui {
 
     /**
      * List all tasks
-     * 
+     *
      * @param tasks list of tasks
      * @return list of tasks
      */
@@ -78,7 +78,7 @@ public class Ui {
 
     /**
      * Show error message
-     * 
+     *
      * @param message error message
      * @return error message
      */
@@ -89,7 +89,7 @@ public class Ui {
 
     /**
      * Show loading error message
-     * 
+     *
      * @param message error message
      * @return loading error message
      */
@@ -100,7 +100,7 @@ public class Ui {
 
     /**
      * Show a generic message
-     * 
+     *
      * @param message message
      * @return generic message
      */
@@ -111,7 +111,7 @@ public class Ui {
 
     /**
      * Read user command
-     * 
+     *
      * @return user command
      */
     public String readCommand() {

@@ -12,7 +12,7 @@ public class Deadline extends Task {
 
     /**
      * Constructs a new Deadline instance.
-     * 
+     *
      * @param description description of deadline
      * @param by          due date of deadline
      */

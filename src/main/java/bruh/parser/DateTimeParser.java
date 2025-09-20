@@ -12,7 +12,7 @@ public class DateTimeParser {
 
     /**
      * Parses a date and time string into a LocalDateTime object.
-     * 
+     *
      * @param dateTimeString The date and time string to parse.
      * @return The parsed LocalDateTime object.
      * @throws DateTimeParseException If the date and time string is invalid.

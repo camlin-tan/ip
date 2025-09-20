@@ -11,7 +11,7 @@ public class Task implements Serializable {
 
     /**
      * Constructs a new Task instance.
-     * 
+     *
      * @param description
      */
     public Task(String description) {
@@ -21,7 +21,7 @@ public class Task implements Serializable {
 
     /**
      * Returns the mark of the task (X if done, space if not done).
-     * 
+     *
      * @return mark
      */
     public String getMark() {
@@ -49,7 +49,7 @@ public class Task implements Serializable {
 
     /**
      * Returns the description of the task.
-     * 
+     *
      * @return description
      */
     public String getDescription() {

@@ -31,7 +31,7 @@ public class TaskList implements Serializable {
 
     /**
      * Adds a Task to the list.
-     * 
+     *
      * @param task The task to add.
      */
     public void addTask(Task task) {
@@ -43,7 +43,7 @@ public class TaskList implements Serializable {
 
     /**
      * Returns the number of tasks in the list.
-     * 
+     *
      * @return the number of tasks in the list
      */
     public int size() {
@@ -68,7 +68,7 @@ public class TaskList implements Serializable {
 
     /**
      * Marks a task as done.
-     * 
+     *
      * @param index The index of the task to mark as done.
      * @return The marked task.
      * @throws BruhException If the task index is invalid.
@@ -130,7 +130,7 @@ public class TaskList implements Serializable {
 
     /**
      * Returns a list of tasks that match the given keyword.
-     * 
+     *
      * @param keyword the keyword to search for
      * @return a list of tasks that match the keyword
      */
@@ -194,7 +194,7 @@ public class TaskList implements Serializable {
 
     /**
      * Returns the list of tasks.
-     * 
+     *
      * @return the list of tasks
      */
     public ArrayList<Task> getTasks() {

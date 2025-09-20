@@ -19,7 +19,7 @@ public class Storage {
 
     /**
      * Constructs a new Storage instance.
-     * 
+     *
      * @param filePath
      */
     public Storage(String filePath) {
@@ -28,7 +28,7 @@ public class Storage {
 
     /**
      * Saves the given tasks to the hard disk.
-     * 
+     *
      * @param tasks ArrayList of tasks
      * @throws BruhException
      */
@@ -48,7 +48,7 @@ public class Storage {
 
     /**
      * Loads the tasks from the hard disk.
-     * 
+     *
      * @return ArrayList of tasks
      * @throws BruhException
      */
