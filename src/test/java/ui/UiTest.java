@@ -1,16 +1,17 @@
 package ui;
 
-import bruh.ui.Ui;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import bruh.ui.Ui;
 
 public class UiTest {
 
@@ -29,20 +30,20 @@ public class UiTest {
     @Test
     public void listTasks_emptyList_success() {
         ui.listTasks(new ArrayList<>());
-        assertEquals("No tasks in the list yet or for date specified."
-                , outContent.toString().trim()
-                , "Output print should be equal");
+        assertEquals("No tasks in the list yet or for date specified.",
+                outContent.toString().trim(),
+                "Output print should be equal");
     }
 
     @Test
     public void testReadCommand() {
-        String command = ui.readCommand();  // This will read "todo Buy potatoes"
+        String command = ui.readCommand();
         assertEquals("todo Buy potatoes", command);
 
-        command = ui.readCommand();  // This will read "mark 1"
+        command = ui.readCommand();
         assertEquals("mark 1", command);
 
-        command = ui.readCommand();  // This will read "bye"
+        command = ui.readCommand();
         assertEquals("bye", command);
     }
 

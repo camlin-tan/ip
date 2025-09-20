@@ -1,14 +1,16 @@
 package command;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import bruh.command.Command;
 import bruh.exception.BruhException;
 import bruh.storage.Storage;
 import bruh.task.TaskList;
 import bruh.ui.Ui;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CommandTest {
     private Ui ui;
@@ -24,8 +26,9 @@ public class CommandTest {
 
     @Test
     public void execute_unknownCommand_exceptionThrown() {
-        assertThrows(BruhException.class,
-                () -> {new Command("invalid", "input");},
+        assertThrows(BruhException.class, () -> {
+            new Command("invalid", "input");
+        },
                 "Throws exception for invalid input");
     }
 
@@ -49,8 +52,8 @@ public class CommandTest {
             command.execute(taskList, ui, storage);
         });
 
-        assertEquals("ERROR!!! Invalid date format for deadline\r\n   "
-                + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n   "
+        assertEquals("ERROR!!! Invalid date format for deadline\r\n"
+                + "Please use in form \'deadline {task-name} /by {time}\' and try again\r\n"
                 + "Please use format of time: yyyy-MM-dd HH:mm (e.g. 2023-03-15 14:30)", exception.getMessage());
     }
 
@@ -64,22 +67,24 @@ public class CommandTest {
     }
 
     @Test
-    public void execute_markCommandEmptyArgument_exceptionThrow() throws BruhException{
+    public void execute_markCommandEmptyArgument_exceptionThrow() throws BruhException {
         Command command = new Command("mark", "");
         BruhException exception = assertThrows(BruhException.class, () -> {
             command.execute(taskList, ui, storage);
         });
 
-        assertEquals("u want mark what? air ah?\r\n   Pls use in form 'mark {task-number}' and try again", exception.getMessage());
+        assertEquals("u want mark what? air ah?\r\nPls use in form 'mark {task-number}' and try again",
+                exception.getMessage());
     }
 
     @Test
-    public void execute_markCommandInvalidArgument_exceptionThrow() throws BruhException{
+    public void execute_markCommandInvalidArgument_exceptionThrow() throws BruhException {
         Command command = new Command("mark", "nonsense");
         BruhException exception = assertThrows(BruhException.class, () -> {
             command.execute(taskList, ui, storage);
         });
 
-        assertEquals("Idk what u tryna mark...\r\n   Pls use in form \'mark {task-number}\' and try again", exception.getMessage());
+        assertEquals("Idk what u tryna mark...\r\nPls use in form \'mark {task-number}\' and try again",
+                exception.getMessage());
     }
 }
