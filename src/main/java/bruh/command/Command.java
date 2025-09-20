@@ -59,7 +59,7 @@ public class Command {
 
     /**
      * Returns the command argument.
-     * 
+     *
      * @return commandArgument
      */
     public String getCommandArgument() {
@@ -77,7 +77,7 @@ public class Command {
 
     /**
      * Executes the list command, listing all tasks in tasklist.
-     * 
+     *
      * @param tasks the list of tasks
      * @param ui    the user interface
      * @return outputString the output message after executing the command
@@ -103,7 +103,7 @@ public class Command {
 
     /**
      * Executes the mark command, marking a task as done.
-     * 
+     *
      * @param tasks the list of tasks
      * @param ui    the user interface
      * @return outputString the output message after executing the command
@@ -178,7 +178,7 @@ public class Command {
 
     /**
      * Executes the find command, finding tasks that match the keyword.
-     * 
+     *
      * @param tasks the list of tasks
      * @param ui    the user interface
      * @return outputString the output message after executing the command
@@ -219,6 +219,14 @@ public class Command {
         return outputString;
     }
 
+    /**
+     * Executes the sort command, sort the task list alphabetically or by date.
+     *
+     * @param tasks the list of tasks
+     * @param ui    the user interface
+     * @return outputString the output message after executing the command
+     * @throws BruhException
+     */
     public String executeSortCommand(TaskList tasks, Ui ui) throws BruhException {
         String outputString = "";
         if (commandArgument.isEmpty()) {
@@ -240,7 +248,7 @@ public class Command {
 
     /**
      * Executes the deadline command, adding a deadline task to tasklist.
-     * 
+     *
      * @param tasks the list of tasks
      * @param ui    the user interface
      * @return outputString the output message after executing the command
